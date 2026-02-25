@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardScript : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+public class CardScript : MonoBehaviour
 {
     private AudioSource source;
     public AudioClip hoverSound;
@@ -20,11 +20,11 @@ public class CardScript : MonoBehaviour, IPointerEnterHandler, IPointerClickHand
     // Update is called once per frame
     void Update()
     {
-
+        //Use Raycast2D
     }
 
     //Detect when Cursor is hovering over the card
-    public void OnPointerEnter(PointerEventData pointerEventData)
+    public void IsHovering()
     {
         //Plays sound while hovering over card
         source.PlayOneShot(hoverSound, 10.0f);
