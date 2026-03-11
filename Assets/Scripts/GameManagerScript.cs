@@ -19,12 +19,37 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hit = Physics2D.Raycast(Mouse.current.position.ReadValue(), Vector2.down);
+        Vector2 mousepos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        print(mousepos);
+        hit = Physics2D.Raycast(mousepos, Vector2.down);
+        Debug.DrawRay(Mouse.current.position.ReadValue(), Vector2.down, Color.yellow);
         if (hit.collider)
         {
             print("hi");
-            hoveringcard = hit.transform.gameObject;
-            hoveringcard.GetComponent<CardScript>().IsHovering();
+            if (hoveringcard == null)
+            {
+                hoveringcard = hit.transform.gameObject;
+                hoveringcard.GetComponent<CardScript>().IsHovering();
+            }
+            else if (hoveringcard != hit.transform.gameObject)
+            {
+                hoveringcard.GetComponent<CardScript>().NotHovering();
+                hoveringcard = hit.transform.gameObject;
+                hoveringcard.GetComponent<CardScript>().IsHovering();
+            }
+                
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                hoveringcard.GetComponent<CardScript>().IsSelected();
+            }
+        }
+        else
+        {
+            if (hoveringcard != null)
+            {
+                hoveringcard.GetComponent<CardScript>().NotHovering();
+                hoveringcard = null;
+            }
         }
 
     }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 56346b4754b58ac42820687608be0edf
+guid: 45aa00954d8047a47a687b2c00eeaef6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4074542236055972493
-    second: chip28_0
+      213: -3198130301585003447
+    second: wp11115947-368053472_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chip28_0
+      name: wp11115947-368053472_0
       rect:
         serializedVersion: 2
-        x: 7
+        x: 0
         y: 0
-        width: 34
-        height: 31
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 375de859c615477c0800000000000000
-      internalID: -4074542236055972493
+      spriteID: 94cec946f65fd93d0800000000000000
+      internalID: -3198130301585003447
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e3e37bbb12d0934428990d9c76e8d8e7
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      chip28_0: -4074542236055972493
+      wp11115947-368053472_0: -3198130301585003447
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
