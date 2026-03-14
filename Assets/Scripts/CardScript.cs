@@ -33,16 +33,16 @@ public class CardScript : MonoBehaviour
     public void IsHovering()
     {
         //Plays sound while hovering over card
-        source.PlayOneShot(hoverSound, 10.0f);
+        source.PlayOneShot(hoverSound, 1.0f);
         isHovering = true;
-        transform.localScale = new Vector3(4.1f, 4.1f, 4.1f);
+        transform.localScale *= 1.1f;
         print("hi");
     }
 
     public void NotHovering()
     {
         isHovering = false;
-        transform.localScale = new Vector3(4f, 4f, 4f);
+        transform.localScale /= 1.1f;
 
     }
 
@@ -52,11 +52,13 @@ public class CardScript : MonoBehaviour
         if (!isSelected)
         {
             isSelected = true;
-            transform.localPosition = Vector3.up;
+            transform.localPosition = Vector3.up * 50;
+            source.PlayOneShot(pressedSound, 1.0f);
         } else
         {
             isSelected = false;
             transform.localPosition = Vector3.zero;
+            source.PlayOneShot(pressedSound, 1.0f);
         }
     }
 
