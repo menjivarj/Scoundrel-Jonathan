@@ -10,10 +10,15 @@ public class GameManagerScript : MonoBehaviour
     public GameObject hoveringcard;
     public GameObject selectedcard;
     RaycastHit2D hit;
+    private float clickTime;
+    public float holdToDragTime;
+    private bool isDragging;
+    private bool mousePressed;
 
     void Start()
     {
-        
+        clickTime = 0;
+        isDragging = false;
     }
 
     // Update is called once per frame
@@ -40,7 +45,18 @@ public class GameManagerScript : MonoBehaviour
                 
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
+                mousePressed = true;
                 hoveringcard.GetComponent<CardScript>().IsSelected();
+                clickTime = Time.time;
+            } else if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                mousePressed = false;
+                hoveringcard.GetComponent <CardScript>().NotDragging();
+                isDragging = false;
+            } else if (mousePressed && !isDragging && Time.time - clickTime > holdToDragTime)
+            {
+                hoveringcard.GetComponent<CardScript>().IsDragging();
+                isDragging = true;
             }
         }
         else

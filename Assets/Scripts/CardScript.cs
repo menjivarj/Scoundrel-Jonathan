@@ -9,6 +9,9 @@ public class CardScript : MonoBehaviour
     public AudioClip pressedSound;
     public bool isHovering;
     public bool isSelected;
+    public bool isDragging;
+    private Vector2 currentVelocity;
+    public float moveSpeed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,6 +19,7 @@ public class CardScript : MonoBehaviour
         source = GetComponent<AudioSource>();
         isHovering = false;
         isSelected = false;
+        isDragging = false;
     }
 
     // Update is called once per frame
@@ -23,9 +27,14 @@ public class CardScript : MonoBehaviour
     {
         if (isHovering) {
             transform.eulerAngles = new Vector3(0, 0, (Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()).x - transform.position.x) * 4);
-        } else
+        } else if(!isHovering)
         {
             transform.eulerAngles = Vector3.zero;
+        }
+        if (isDragging)
+        {
+            transform.position = Vector2.SmoothDamp(transform.position, Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), ref currentVelocity, Time.deltaTime, moveSpeed);
+            transform.eulerAngles = new Vector3(0, 0, -1 * currentVelocity.x * currentVelocity.y);
         }
     }
 
@@ -52,7 +61,7 @@ public class CardScript : MonoBehaviour
         if (!isSelected)
         {
             isSelected = true;
-            transform.localPosition = Vector3.up * 50;
+            transform.localPosition = Vector3.up;
             source.PlayOneShot(pressedSound, 1.0f);
         } else
         {
@@ -62,5 +71,14 @@ public class CardScript : MonoBehaviour
         }
     }
 
+    public void IsDragging() 
+    {
+        isDragging = true;
+    }
 
+    public void NotDragging()
+    {
+        isDragging = false;
+        transform.localPosition = Vector3.zero;
+    }
 }
