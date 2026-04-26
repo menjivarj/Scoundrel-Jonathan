@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: -1430731832964040306}
   - component: {fileID: -2324579007419075987}
   - component: {fileID: -3764602348891109790}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Card
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,6 +154,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Card
   hoverSound: {fileID: 8300000, guid: 35a2afced6a44314b905494dc3d1411d, type: 3}
   pressedSound: {fileID: 8300000, guid: d57d152bc673c2b47b7a4061735d68da, type: 3}
+  isHovering: 0
+  isDragging: 0
+  currentVelocity: {x: 0, y: 0}
+  moveSpeed: 0
+  hoveringcard: {fileID: 0}
 --- !u!82 &-3764602348891109790
 AudioSource:
   m_ObjectHideFlags: 0

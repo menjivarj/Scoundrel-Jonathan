@@ -12,10 +12,15 @@ public class CardScript : MonoBehaviour
     private AudioSource source;
     public AudioClip hoverSound;
     public AudioClip pressedSound;
+
     public bool isHovering;
     public bool isDragging;
     public Vector2 currentVelocity;
     public float moveSpeed;
+    public float angleMultiplier;
+
+    public int cardValue;
+    public string cardSuit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,8 +46,8 @@ public class CardScript : MonoBehaviour
         {
             transform.eulerAngles = dist >= 1 ? new Vector3(0, 0, (Math.Clamp(-1 * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y), -1.0f, 1.0f) * moveSpeed) / dist) : Vector3.zero;
             float nDist = (dist / 1280);
-                moveSpeed = Camera.main.scaledPixelHeight * easeOutCubic(Math.Clamp(nDist, 0.0f, 1.0f));
-            Vector3 pos = Vector2.SmoothDamp(transform.position, Camera.main.ScreenToWorldPoint(mousePos), 
+            moveSpeed = Camera.main.scaledPixelHeight * easeOutCubic(Math.Clamp(nDist, 0.0f, 1.0f));
+            Vector3 pos = Vector2.SmoothDamp(transform.position, Camera.main.ScreenToWorldPoint(mousePos),
                 ref currentVelocity, Time.deltaTime, moveSpeed);
             transform.position = pos;
         }
@@ -62,7 +67,6 @@ public class CardScript : MonoBehaviour
     {
         isHovering = false;
         transform.localScale /= 1.1f;
-
     }
 
     //Detect when player is dragging the card
@@ -82,4 +86,5 @@ public class CardScript : MonoBehaviour
     private float easeOutCubic(float number) {
         return (1.0f - (float) Math.Pow((1 - number), 3));
     }
+
 }
