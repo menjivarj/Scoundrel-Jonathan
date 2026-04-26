@@ -23,10 +23,10 @@ public class GameManagerScript : MonoBehaviour
     public class CardData
     {
         public string name;
-        public string suit;
+        public int suit;
         public int value;
 
-        public CardData(string suit, int value)
+        public CardData(int suit, int value)
         {
             this.suit = suit;
             this.value = value;
@@ -48,22 +48,22 @@ public class GameManagerScript : MonoBehaviour
 
         public void AddStandardDeck()
         {
-            string[] suits = { "Spades", "Hearts", "Clubs", "Diamonds" };
-            foreach (string s in suits)
+            for (int s = 0; s < 4; s++)
             {
-                for (int i = 1; i < 14; i++)
+                for (int v = 1; v < 14; v++)
                 {
-                    deckData.Add(new CardData(s, i));
+                    deckData.Add(new CardData(s, v));
                 }
             }
         }
-
     }
 
+    public GameObject card;
     public List<DeckData> cardDecks;
     public DeckData currentDeck;
+    public int currentDecknum;
     public GameObject room;
-
+    public List<Sprite> cardSprites;
 
     void Start()
     {
@@ -74,24 +74,34 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDragging && Mouse.current.leftButton.wasReleasedThisFrame)
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
-            print(draggingcard);
             mousePressed = false;
-            draggingcard.GetComponent<CardScript>().NotDragging();
-            isDragging = false;
-            draggingcard = null;
-            print("released");
+            if (isDragging)
+            {
+                //print(draggingcard);
+                if (hoveringcard != null)
+                {
+                    //if (draggingcard.GetComponent<CardScript>().cardValue == 0)
+                    {
+                        room.GetComponent<RoomManager>().EqualizeDistance();
+                    }
+                }
+                mousePressed = false;
+                draggingcard.GetComponent<CardScript>().NotDragging();
+                isDragging = false;
+                draggingcard = null;
+                //print("released");
+            }
         }
         else
         {
             Vector2 mousepos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             //print(mousepos);
             hits = Physics2D.RaycastAll(mousepos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("CardLayer"));
-            Debug.DrawRay(Mouse.current.position.ReadValue(), Vector2.down, Color.yellow);
             if (hits.Length != 0)
             {
-                print(hits[0].collider.gameObject);
+                //print(hits[0].collider.gameObject);
                 if (!isDragging)
                 {
                     HoveringOverCard(hits[0]);
@@ -162,6 +172,27 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    
+    public void StartGame()
+    {
+        print("Starting Game");
+        currentDeck.AddStandardDeck();
+        print("Added Deck");
+        DrawRoom();
+    }
+
+    public void DrawRoom()
+    {
+        RoomManager roomManager = room.GetComponent<RoomManager>();
+        for (int i = roomManager.cards.Count; i < roomManager.roomSize; i++)
+        {
+            CardData cardDraw = currentDeck.deckData[Random.Range(0, currentDeck.deckData.Count)];
+            roomManager.cards.Add(Instantiate(card, room.transform));
+            roomManager.cards[i].GetComponent<CardScript>().GetSetUp(cardDraw.suit, cardDraw.value, angleMultiplier);
+            roomManager.cards[i].GetComponent<SpriteRenderer>().sprite = cardSprites[((cardDraw.suit * 13) + cardDraw.value) - 1];
+            print("Card Added");
+        }
+        roomManager.EqualizeDistance();
+        print("Room Drawn");
+    }
 
 }

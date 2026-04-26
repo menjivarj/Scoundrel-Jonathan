@@ -18,9 +18,10 @@ public class CardScript : MonoBehaviour
     public Vector2 currentVelocity;
     public float moveSpeed;
     public float angleMultiplier;
+    public Vector2 defaultPosition;
 
     public int cardValue;
-    public string cardSuit;
+    public int cardSuit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -79,12 +80,20 @@ public class CardScript : MonoBehaviour
     public void NotDragging()
     {
         isDragging = false;
-        transform.localPosition = Vector3.zero;
+        transform.localPosition = defaultPosition;
         source.PlayOneShot(pressedSound, 1.0f);
     }
 
     private float easeOutCubic(float number) {
         return (1.0f - (float) Math.Pow((1 - number), 3));
     }
+
+    public void GetSetUp(int suit, int value, float angleMult)
+    {
+        cardSuit = suit;
+        cardValue = value;
+        angleMultiplier = angleMult;
+    }
+
 
 }
