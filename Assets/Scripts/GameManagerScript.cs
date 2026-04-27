@@ -80,10 +80,14 @@ public class GameManagerScript : MonoBehaviour
     public GameObject winParticle;
     public Sprite[] winParticles;
 
+    private AudioSource audioSource;
+    public AudioClip cardInteractionSound;
+
     void Start()
     {
         clickTime = Time.time;
         isDragging = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -103,7 +107,6 @@ public class GameManagerScript : MonoBehaviour
                     RoomManager roomManager = room.GetComponent<RoomManager>();
                     if (hoveringScript.isHeld)
                     {
-                        
                         if (draggingScript.cardType == "Weapon")
                         {
                             if (!draggingScript.isHeld)
@@ -155,8 +158,9 @@ public class GameManagerScript : MonoBehaviour
                         {
                             DrawRoom();
                         }
+                        healthText.text = health.ToString();
+                        audioSource.PlayOneShot(cardInteractionSound, 1.0f);
                     }
-                    healthText.text = health.ToString();
                     roomManager.EqualizeDistance();
                     handManager.EqualizeDistance();
                 }
@@ -310,6 +314,7 @@ public class GameManagerScript : MonoBehaviour
         }
         hand.SetActive(false);
         room.GetComponent<RoomManager>().ChangeBackground(0);
+        room.SetActive(false);
         winlossPanel.SetActive(true);
     }
 

@@ -152,15 +152,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f17ea6323f28cd43b4d523a9a87025d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Card
-  hoverSound: {fileID: 8300000, guid: 35a2afced6a44314b905494dc3d1411d, type: 3}
-  pressedSound: {fileID: 8300000, guid: d57d152bc673c2b47b7a4061735d68da, type: 3}
+  hoverSound: {fileID: 8300000, guid: 8fe2daffdf0f9b9459c558f9ab7c28ef, type: 3}
+  pressedSound: {fileID: 8300000, guid: 3099dbf9e93f38a45bcf87de6cf97cbb, type: 3}
   isHovering: 0
   isDragging: 0
   currentVelocity: {x: 0, y: 0}
   moveSpeed: 0
   angleMultiplier: 0
+  defaultPosition: {x: 0, y: 0}
   cardValue: 0
+  effectiveValue: 0
   cardSuit: 0
+  cardType: 
+  isHeld: 0
 --- !u!82 &-3764602348891109790
 AudioSource:
   m_ObjectHideFlags: 0
