@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 45aa00954d8047a47a687b2c00eeaef6
+guid: 9b12b1d9ef00082468928b410f32495d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3198130301585003447
-    second: wp11115947-368053472_0
+      213: -4221645353152754211
+    second: rm251-mind-12_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wp11115947-368053472_0
+      name: rm251-mind-12_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1920
-        height: 1080
+        width: 4000
+        height: 2667
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 94cec946f65fd93d0800000000000000
-      internalID: -3198130301585003447
+      spriteID: dddc6a52be3b965c0800000000000000
+      internalID: -4221645353152754211
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      wp11115947-368053472_0: -3198130301585003447
+      rm251-mind-12_0: -4221645353152754211
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -21,7 +21,10 @@ public class CardScript : MonoBehaviour
     public Vector2 defaultPosition;
 
     public int cardValue;
+    public int effectiveValue;
     public int cardSuit;
+    public string cardType;
+    public bool isHeld;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,14 +41,14 @@ public class CardScript : MonoBehaviour
         Vector2 cardPos = Camera.main.WorldToScreenPoint(transform.position);
         float dist = Vector2.Distance(mousePos, cardPos);
         if (isHovering) {
-            transform.eulerAngles = new Vector3(0, 0, -1 * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y) / Camera.main.scaledPixelHeight);
+            transform.eulerAngles = new Vector3(0, 0, -angleMultiplier * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y) / Camera.main.scaledPixelHeight);
         } else if(!isHovering)
         {
             transform.eulerAngles = Vector3.zero;
         }
         if (isDragging)
         {
-            transform.eulerAngles = dist >= 1 ? new Vector3(0, 0, (Math.Clamp(-1 * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y), -1.0f, 1.0f) * moveSpeed) / dist) : Vector3.zero;
+            transform.eulerAngles = dist >= 1 ? new Vector3(0, 0, (Math.Clamp(-1 * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y), -angleMultiplier, angleMultiplier) * moveSpeed) / dist) : Vector3.zero;
             float nDist = (dist / 1280);
             moveSpeed = Camera.main.scaledPixelHeight * easeOutCubic(Math.Clamp(nDist, 0.0f, 1.0f));
             Vector3 pos = Vector2.SmoothDamp(transform.position, Camera.main.ScreenToWorldPoint(mousePos),
@@ -88,11 +91,13 @@ public class CardScript : MonoBehaviour
         return (1.0f - (float) Math.Pow((1 - number), 3));
     }
 
-    public void GetSetUp(int suit, int value, float angleMult)
+    public void GetSetUp(int suit, int value, string type, float angleMult)
     {
         cardSuit = suit;
         cardValue = value;
+        cardType = type;
         angleMultiplier = angleMult;
+        effectiveValue = value;
     }
 
 
