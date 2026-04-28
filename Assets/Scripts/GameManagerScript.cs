@@ -17,9 +17,11 @@ public class GameManagerScript : MonoBehaviour
     RaycastHit2D[] hits;
     private float clickTime;
     public float holdToDragTime;
+    public TMP_Text holdToDragTimeText;
     private bool isDragging;
     private bool mousePressed;
     public float angleMultiplier;
+    public TMP_Text angleMultiplierText;
 
     [System.Serializable]
     public class CardData
@@ -69,6 +71,7 @@ public class GameManagerScript : MonoBehaviour
     public GameObject room;
     public List<Sprite> cardSprites;
     public List<Sprite> specialCardSprites;
+    public bool hardMode;
 
     public GameObject hand;
     public int health;
@@ -82,6 +85,10 @@ public class GameManagerScript : MonoBehaviour
 
     private AudioSource audioSource;
     public AudioClip cardInteractionSound;
+    public AudioSource backgroundAudio;
+    public TMP_Text volumeText;
+    public int roomDrawSize;
+    public TMP_Text roomDrawSizeText;
 
     void Start()
     {
@@ -118,6 +125,7 @@ public class GameManagerScript : MonoBehaviour
                                 draggingScript.isHeld = true;
                                 draggingScript.effectiveValue = 20;
                                 Destroy(hoveringcard);
+                                HardModeIncrement();
                             }
                             else
                             {
@@ -131,6 +139,7 @@ public class GameManagerScript : MonoBehaviour
                             health += draggingScript.cardValue;
                             roomManager.cards.Remove(draggingcard);
                             Destroy(draggingcard);
+                            HardModeIncrement();
                         }
                         else if (draggingScript.cardType == "Enemy")
                         {
@@ -153,8 +162,9 @@ public class GameManagerScript : MonoBehaviour
                             {
                                 WinLoss(false);
                             }
+                            HardModeIncrement();
                         }
-                        if (roomManager.cards.Count == 0)
+                        if (roomManager.cards.Count <= roomDrawSize)
                         {
                             DrawRoom();
                         }
@@ -217,13 +227,28 @@ public class GameManagerScript : MonoBehaviour
 
     public void DragTimeChange(float value)
     {
-        holdToDragTime = value;
+        holdToDragTime = value / 100;
+        holdToDragTimeText.SetText(holdToDragTime + "s");
     }
 
     public void AngleMultiplierChange(float value)
     {
-        angleMultiplier = value;
+        angleMultiplier = value / 10;
         room.GetComponent<RoomManager>().AngleMultiplierChange(value);
+        angleMultiplierText.SetText(angleMultiplier + "x");
+    }
+
+    public void VolumeChange(float value)
+    {
+        float volume = value / 100;
+        backgroundAudio.volume = volume;
+        volumeText.SetText(value + "%");
+    }
+
+    public void RoomDrawSize(float value)
+    {
+        roomDrawSize = (int)value - 1;
+        roomDrawSizeText.SetText((roomDrawSize).ToString());
     }
 
     private void HoveringOverCard(RaycastHit2D card)
@@ -266,11 +291,12 @@ public class GameManagerScript : MonoBehaviour
 
     public void DrawRoom()
     {
-        if (currentDeck.deckData.Count == 0)
+        RoomManager roomManager = room.GetComponent<RoomManager>();
+        if (currentDeck.deckData.Count == 0 && roomManager.cards.Count == 0)
         {
             WinLoss(true);
         }
-        RoomManager roomManager = room.GetComponent<RoomManager>();
+        
         for (int i = roomManager.cards.Count; (i < roomManager.roomSize && currentDeck.deckData.Count > 0); i++)
         {
             int j = Random.Range(0, currentDeck.deckData.Count);
@@ -316,6 +342,37 @@ public class GameManagerScript : MonoBehaviour
         room.GetComponent<RoomManager>().ChangeBackground(0);
         room.SetActive(false);
         winlossPanel.SetActive(true);
+    }
+
+    public void HardMode()
+    {
+        hardMode = !hardMode;
+    }
+
+    public void HardModeIncrement()
+    {
+        if (hardMode)
+        {
+            foreach (GameObject card in room.GetComponent<RoomManager>().cards)
+            {
+                CardScript cardScript = card.GetComponent<CardScript>();
+                if (cardScript.cardType == "Enemy")
+                {
+                    if (cardScript.cardValue < 13)
+                    {
+                        cardScript.SetValues(cardScript.cardValue + 1);
+                    }
+                }
+                else
+                {
+                    if (cardScript.cardValue > 1)
+                    {
+                        cardScript.SetValues(cardScript.cardValue - 1);
+                    }
+                }
+                card.GetComponent<SpriteRenderer>().sprite = cardSprites[((cardScript.cardSuit * 13) + cardScript.cardValue) - 1];
+            }
+        }
     }
 
 }

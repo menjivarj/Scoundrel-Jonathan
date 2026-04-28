@@ -100,5 +100,10 @@ public class CardScript : MonoBehaviour
         effectiveValue = value;
     }
 
+    public void SetValues(int value)
+    {
+        cardValue = value;
+        effectiveValue = value;
+    }
 
 }

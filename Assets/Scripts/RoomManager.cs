@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class RoomManager : MonoBehaviour
     private RectTransform roomRect;
     public GameObject background;
     public Sprite[] backgrounds;
+    public TMP_Text roomSizeText;
 
     void Awake()
     {
@@ -66,6 +68,12 @@ public class RoomManager : MonoBehaviour
             Destroy(card);
         }
         cards.Clear();
+    }
+
+    public void UpdateSize(float size)
+    {
+        roomSize = ((int)size);
+        roomSizeText.SetText(roomSize.ToString());
     }
 
 }
