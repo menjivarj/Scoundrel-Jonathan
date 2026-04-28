@@ -84,6 +84,7 @@ public class GameManagerScript : MonoBehaviour
     public TMP_Text volumeText;
     public int roomDrawSize;
     public TMP_Text roomDrawSizeText;
+    public bool neatCardPlacement;
 
     void Start()
     {
@@ -152,6 +153,10 @@ public class GameManagerScript : MonoBehaviour
                                 draggingcard.GetComponent<Collider2D>().enabled = false;
                                 health -= Mathf.Max(0, draggingScript.cardValue - hoveringScript.cardValue);
                                 hoveringScript.effectiveValue = draggingScript.cardValue;
+                                if (neatCardPlacement)
+                                {
+                                    draggingScript.transform.localEulerAngles = Vector3.zero;
+                                }
                             } 
                             else
                             {
@@ -354,9 +359,14 @@ public class GameManagerScript : MonoBehaviour
         winlossPanel.SetActive(true);
     }
 
-    public void HardMode()
+    public void HardMode(bool value)
     {
-        hardMode = !hardMode;
+        hardMode = value;
+    }
+
+    public void NeatCards(bool value)
+    {
+        neatCardPlacement = value;
     }
 
     public void HardModeIncrement()
