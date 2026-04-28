@@ -31,6 +31,7 @@ public class RoomManager : MonoBehaviour
         
     }
 
+    //Takes all cards and spreads them out evenly
     public void EqualizeDistance()
     {
         for (int i = 0; i < cards.Count; i++)
@@ -40,6 +41,7 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    //Used to change the card rotation intensity of all cards in the room
     public void AngleMultiplierChange(float value)
     {
         foreach (GameObject card in cards)
@@ -68,6 +70,7 @@ public class RoomManager : MonoBehaviour
         cards.Clear();
     }
 
+    //Updates the amount of cards able to be held in the room
     public void UpdateSize(float size)
     {
         roomSize = ((int)size);

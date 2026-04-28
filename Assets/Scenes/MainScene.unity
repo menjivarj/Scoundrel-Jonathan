@@ -2470,7 +2470,7 @@ RectTransform:
   m_Father: {fileID: 94174014}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.125, y: 1}
+  m_AnchorMax: {x: 0.1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3073,7 +3073,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 120, y: -10}
+  m_AnchoredPosition: {x: 110, y: -7.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887280688
@@ -3096,7 +3096,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1x
+  m_text: 0.2x
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a1c5288d759db7b45aeb1289d2b305cc, type: 2}
   m_sharedMaterial: {fileID: -6688578894737371718, guid: a1c5288d759db7b45aeb1289d2b305cc, type: 2}
@@ -3262,9 +3262,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2109688094}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 80
+  m_MaxValue: 200
   m_WholeNumbers: 1
-  m_Value: 10
+  m_Value: 20
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -4003,7 +4003,7 @@ MonoBehaviour:
   draggingcard: {fileID: 0}
   holdToDragTime: 0.3
   holdToDragTimeText: {fileID: 130770253}
-  angleMultiplier: 1
+  angleMultiplier: 0.2
   angleMultiplierText: {fileID: 887280688}
   card: {fileID: 8900264848257535935, guid: aff0f44586b69844aaea027fef402b35, type: 3}
   cardDecks:
@@ -18968,8 +18968,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1453164166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.125, y: 0}
-  m_AnchorMax: {x: 0.125, y: 1}
+  m_AnchorMin: {x: 0.1, y: 0}
+  m_AnchorMax: {x: 0.1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

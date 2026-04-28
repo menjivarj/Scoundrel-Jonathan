@@ -95,6 +95,7 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Card Dropping on Mouse Release Logic
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             mousePressed = false;
@@ -109,10 +110,12 @@ public class GameManagerScript : MonoBehaviour
                     RoomManager roomManager = room.GetComponent<RoomManager>();
                     if (hoveringScript.isHeld)
                     {
+                        //Card Interaction dependent on card type
                         if (draggingScript.cardType == "Weapon")
                         {
                             if (!draggingScript.isHeld)
                             {
+                                //Moves Weapon from Room to Hand and makes it able to hit any enemy effectively
                                 roomManager.cards.Remove(draggingcard);
                                 handManager.cards.Add(draggingcard);
                                 handManager.cards.RemoveSwapBack(hoveringcard);
@@ -124,6 +127,7 @@ public class GameManagerScript : MonoBehaviour
                             }
                             else
                             {
+                                //Discards Weapon when dragged onto another card in Hand
                                 handManager.cards.Remove(draggingcard);
                                 FillHand();
                                 Destroy(draggingcard);
@@ -131,6 +135,7 @@ public class GameManagerScript : MonoBehaviour
                         }
                         else if (draggingScript.cardType == "Health")
                         {
+                            //Adds Health and Discards card when dragged into Hand
                             health += draggingScript.cardValue;
                             roomManager.cards.Remove(draggingcard);
                             Destroy(draggingcard);
@@ -140,6 +145,7 @@ public class GameManagerScript : MonoBehaviour
                         {
                             if (draggingScript.cardValue < hoveringScript.effectiveValue)
                             {
+                                //Weapon Durability Mechanic where dropped enemy must have less value than the previous enemy if weapon was not already used
                                 roomManager.cards.Remove(draggingcard);
                                 draggingcard.transform.SetParent(hoveringcard.transform);
                                 draggingScript.defaultPosition = new Vector2(0.1f * hoveringcard.transform.childCount, -0.1f * hoveringcard.transform.childCount);
@@ -149,6 +155,7 @@ public class GameManagerScript : MonoBehaviour
                             } 
                             else
                             {
+                                //Enemy dropped onto Weapons or Blank Hand Slots deal all of their damage
                                 health -= draggingScript.cardValue;
                                 roomManager.cards.Remove(draggingcard);
                                 Destroy(draggingcard);
@@ -178,6 +185,7 @@ public class GameManagerScript : MonoBehaviour
         }
         else
         {
+            //Mouse Hovering detection and dragging mechanic
             Vector2 mousepos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             //print(mousepos);
             hits = Physics2D.RaycastAll(mousepos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("CardLayer"));
@@ -186,6 +194,7 @@ public class GameManagerScript : MonoBehaviour
                 //print(hits[0].collider.gameObject);
                 if (!isDragging)
                 {
+                    //Dragging Timer Logic determines how long mouse must be pressed on a card to consider it being dragged
                     HoveringOverCard(hits[0]);
                     if (Mouse.current.leftButton.wasPressedThisFrame)
                     {
@@ -228,7 +237,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void AngleMultiplierChange(float value)
     {
-        angleMultiplier = value / 10;
+        angleMultiplier = value / 100;
         room.GetComponent<RoomManager>().AngleMultiplierChange(value);
         angleMultiplierText.SetText(angleMultiplier + "x");
     }
@@ -248,6 +257,7 @@ public class GameManagerScript : MonoBehaviour
 
     private void HoveringOverCard(RaycastHit2D card)
     {
+        //Tells the new card that it is being hovered over and tells the old card that it isnt
         if (hoveringcard == null)
         {
             hoveringcard = card.transform.gameObject;
@@ -263,6 +273,7 @@ public class GameManagerScript : MonoBehaviour
 
     private void NotHovering()
     {
+        //Tells the card it is no longer being hovered over
         if (hoveringcard != null)
         {
             hoveringcard.GetComponent<CardScript>().NotHovering();
@@ -286,12 +297,14 @@ public class GameManagerScript : MonoBehaviour
 
     public void DrawRoom()
     {
+        //Win Condition Logic if Deck and Room are empty
         RoomManager roomManager = room.GetComponent<RoomManager>();
         if (currentDeck.deckData.Count == 0 && roomManager.cards.Count == 0)
         {
             WinLoss(true);
         }
         
+        //Draws a new set of cards to the room based on the current Deck data and reflects it on the data by removing the Card data
         for (int i = roomManager.cards.Count; (i < roomManager.roomSize && currentDeck.deckData.Count > 0); i++)
         {
             int j = Random.Range(0, currentDeck.deckData.Count);
@@ -310,6 +323,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void FillHand()
     {
+        //Logic to fill hand with Blank cards when slots become empty
         RoomManager handManager = hand.GetComponent<RoomManager>();
         for (int i = handManager.cards.Count; i < handManager.roomSize; i++)
         {
@@ -324,6 +338,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void WinLoss(bool winloss)
     {
+        //WinLoss
         if (winloss)
         {
             winlossText.text = "YOU WIN";
@@ -348,6 +363,7 @@ public class GameManagerScript : MonoBehaviour
     {
         if (hardMode)
         {
+            //Increments the value of enemy cards and decrements the value of helpful cards on end of turn / on card interaction
             foreach (GameObject card in room.GetComponent<RoomManager>().cards)
             {
                 CardScript cardScript = card.GetComponent<CardScript>();

@@ -32,30 +32,32 @@ public class CardScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Vector2 cardPos = Camera.main.WorldToScreenPoint(transform.position);
-        float dist = Vector2.Distance(mousePos, cardPos);
-        if (isHovering) {
-            transform.eulerAngles = new Vector3(0, 0, -angleMultiplier * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y) / Camera.main.scaledPixelHeight);
-        } else if(!isHovering)
-        {
-            transform.eulerAngles = Vector3.zero;
-        }
+        //Card Movement and Rotation based on mouse position
         if (isDragging)
         {
-            transform.eulerAngles = dist >= 1 ? new Vector3(0, 0, (Math.Clamp(-1 * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y), -angleMultiplier, angleMultiplier) * moveSpeed) / dist) : Vector3.zero;
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+            Vector2 cardPos = Camera.main.WorldToScreenPoint(transform.position);
+            float dist = Vector2.Distance(mousePos, cardPos);
+            transform.eulerAngles = dist >= 1 ? new Vector3(0, 0, (-1 * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y) * moveSpeed * angleMultiplier) / dist) : Vector3.zero;
             float nDist = (dist / 1280);
             moveSpeed = Camera.main.scaledPixelHeight * easeOutCubic(Math.Clamp(nDist, 0.0f, 1.0f));
             Vector3 pos = Vector2.SmoothDamp(transform.position, Camera.main.ScreenToWorldPoint(mousePos),
                 ref currentVelocity, Time.deltaTime, moveSpeed);
             transform.position = pos;
+        } 
+        else if (isHovering)
+        {
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+            Vector2 cardPos = Camera.main.WorldToScreenPoint(transform.position);
+            float dist = Vector2.Distance(mousePos, cardPos);
+            transform.eulerAngles = new Vector3(0, 0, -angleMultiplier * (mousePos.x - cardPos.x) * (mousePos.y - cardPos.y) / dist);
         }
+
     }
 
-    //Detect when Cursor is hovering over the card
+    //Used when Cursor is detected to be hovering over the card
     public void IsHovering()
     {
-        //Plays sound while hovering over card
         source.PlayOneShot(hoverSound, 1.0f);
         isHovering = true;
         transform.localScale *= 1.1f;
@@ -66,9 +68,10 @@ public class CardScript : MonoBehaviour
     {
         isHovering = false;
         transform.localScale /= 1.1f;
+        transform.eulerAngles = Vector3.zero;
     }
 
-    //Detect when player is dragging the card
+    //Used when player is detected to be dragging the card
     public void IsDragging() 
     {
         isDragging = true;
@@ -82,10 +85,12 @@ public class CardScript : MonoBehaviour
         source.PlayOneShot(pressedSound, 1.0f);
     }
 
+    //Function for card movement calculations
     private float easeOutCubic(float number) {
         return (1.0f - (float) Math.Pow((1 - number), 3));
     }
 
+    //Sets the values specified used for card instantiation
     public void GetSetUp(int suit, int value, string type, float angleMult)
     {
         cardSuit = suit;
@@ -95,6 +100,7 @@ public class CardScript : MonoBehaviour
         effectiveValue = value;
     }
 
+    //Used to change the value of a card
     public void SetValues(int value)
     {
         cardValue = value;
