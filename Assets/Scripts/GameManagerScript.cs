@@ -1,13 +1,8 @@
-using NUnit.Framework.Internal.Builders;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
-using Unity.VisualScripting;
-using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class GameManagerScript : MonoBehaviour
 {

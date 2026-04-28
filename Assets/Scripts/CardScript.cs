@@ -1,11 +1,6 @@
 using System;
-using System.Text;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements.Experimental;
 
 public class CardScript : MonoBehaviour
 {
